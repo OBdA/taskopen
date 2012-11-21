@@ -90,7 +90,7 @@ IFS="
 #read annotations from task info output
 annotations=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
-	| gawk '
+	| awk '
 		$1 ~ /^[[:digit:]]/ && $2 ~ '$FILEREGEX' {
 			ann="";
 			for(i=2; i<NF; i++) ann=(ann $i " "); 
@@ -100,7 +100,7 @@ annotations=$(
 )
 anncount=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
-	| gawk '
+	| awk '
 		$1 ~ /^[[:digit:]]/ && $2 ~ '$FILEREGEX' {
 			n++
 		}
@@ -109,12 +109,12 @@ anncount=$(
 )
 
 # read UUIDs that are annotated with $NOTEMSG
-# remark: gawk sets a state (MATCH=1) if annotation with $NOTEMSG has been found;
+# remark: awk sets a state (MATCH=1) if annotation with $NOTEMSG has been found;
 #         if a line matches UUID and MATCH was set, it will print the last field (UUID) 
 #         and resets MATCH to 0.
 UUIDs=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
-	| gawk '
+	| awk '
 		$1 ~ /^[[:digit:]]/ && $NF ~ /^'$NOTEMSG'/ {MATCH=1};
 		/^UUID/ {
 			if (MATCH==1) {print $NF;MATCH=0}
@@ -122,10 +122,10 @@ UUIDs=$(
 )
 
 # get descriptions of the previously extracted UUIDs (TODO query taskwarrior directly when UUID addressing is available)
-# remark: gawk stores each description in the DESC; if a annotation with $NOTEMSG has been found, DESC will be printed
+# remark: awk stores each description in the DESC; if a annotation with $NOTEMSG has been found, DESC will be printed
 descriptions=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
-	| gawk '
+	| awk '
 		/^Description/ {
 			DESC=""; for(i=2; i<=NF; i++) DESC=(DESC $i " ")
 		};
