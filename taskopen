@@ -91,7 +91,7 @@ IFS="
 annotations=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
 	| awk '
-		$1 ~ /^[[:digit:]]/ && $2 ~ '$FILEREGEX' {
+		$1 ~ /^[0-9]/ && $2 ~ '$FILEREGEX' {
 			ann="";
 			for(i=2; i<NF; i++) ann=(ann $i " "); 
 			ann=(ann $NF); 
@@ -101,7 +101,7 @@ annotations=$(
 anncount=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
 	| awk '
-		$1 ~ /^[[:digit:]]/ && $2 ~ '$FILEREGEX' {
+		$1 ~ /^[0-9]/ && $2 ~ '$FILEREGEX' {
 			n++
 		}
 		END { print n }
@@ -115,7 +115,7 @@ anncount=$(
 UUIDs=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
 	| awk '
-		$1 ~ /^[[:digit:]]/ && $NF ~ /^'$NOTEMSG'/ {MATCH=1};
+		$1 ~ /^[0-9]/ && $NF ~ /^'$NOTEMSG'/ {MATCH=1};
 		/^UUID/ {
 			if (MATCH==1) {print $NF;MATCH=0}
 	}'
@@ -129,7 +129,7 @@ descriptions=$(
 		/^Description/ {
 			DESC=""; for(i=2; i<=NF; i++) DESC=(DESC $i " ")
 		};
-		$1 ~ /^[[:digit:]]/ && $NF ~ /^'$NOTEMSG'/ {print DESC}
+		$1 ~ /^[0-9]/ && $NF ~ /^'$NOTEMSG'/ {print DESC}
 	'
 )
 
