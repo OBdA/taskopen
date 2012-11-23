@@ -27,5 +27,9 @@
 #
 ###############################################################################
 
-/usr/local/bin/task add +email E-mail: $(egrep '^Subject|^From' $* | awk -F: '{print $2}' | sed 's/\(.*>\)\(.*\)/\1 - \2/g')
+/usr/local/bin/task add +email E-mail: $(
+	grep -E '^Subject|^From' $* \
+	| awk -F: '{print $2}' \
+	| sed 's/\(.*>\)\(.*\)/\1 - \2/g'
+)
 
