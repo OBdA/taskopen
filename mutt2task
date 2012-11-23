@@ -27,7 +27,9 @@
 #
 ###############################################################################
 
-/usr/local/bin/task add +email E-mail: $(
+TASKBIN="/usr/local/bin/task rc:/home/olf/.taskrc-test"
+
+$TASKBIN add +email E-mail: $(
 	grep -E '^Subject|^From' $* \
 	| awk -F: '{print $2}' \
 	| sed 's/\(.*>\)\(.*\)/\1 - \2/g'

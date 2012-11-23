@@ -27,8 +27,10 @@
 #
 ###############################################################################
 
-${DRYRUN:+echo} task $(
-	task rc._forcecolor=no newest \
+TASKBIN="/usr/local/bin/task rc:/home/olf/.taskrc-test"
+
+${DRYRUN:+echo} $TASKBIN $(
+	$TASKBIN rc._forcecolor=no newest \
 	| head -4 | tail -1 \
 	| awk '{print $1}'
 ) ann $(egrep -A1 -i '^Message-ID|^Message-id' $* \
