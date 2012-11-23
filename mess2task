@@ -27,7 +27,7 @@
 #
 ###############################################################################
 
-task $(
+${DRYRUN:+echo} task $(
 	task rc._forcecolor=no newest \
 	| head -4 | tail -1 \
 	| awk '{print $1}'
