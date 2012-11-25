@@ -91,7 +91,7 @@ IFS="
 annotations=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
 	| awk '
-		$1 ~ /^[0-9]/ && $2 ~ '$FILEREGEX' {
+		$1 ~ /^[0-9]/ && $2 ~ /^(http:\/\/|www\.|Notes|\/|~|Message-[Ii][Dd])/ {
 			ann="";
 			for(i=2; i<NF; i++) ann=(ann $i " "); 
 			ann=(ann $NF); 
@@ -101,7 +101,7 @@ annotations=$(
 anncount=$(
 	$TASKBIN rc._forcecolor=no rc.defaultwidth=0 $ID info \
 	| awk '
-		$1 ~ /^[0-9]/ && $2 ~ '$FILEREGEX' {
+		$1 ~ /^[0-9]/ && $2 ~ /^(http:\/\/|www\.|Notes|\/|~|Message-[Ii][Dd])/ {
 			n++
 		}
 		END { print n }
